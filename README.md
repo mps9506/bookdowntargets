@@ -4,6 +4,11 @@
 # bookdowntargets
 
 <!-- badges: start -->
+
+[![Project Status: Concept – Minimal or no implementation has been done
+yet, or the repository is only intended to be a limited example, demo,
+or
+proof-of-concept.](https://www.repostatus.org/badges/latest/concept.svg)](https://www.repostatus.org/#concept)
 <!-- badges: end -->
 
 Experimental package implementing the targets pipeline for bookdown
@@ -19,3 +24,25 @@ submitted to CRAN.
   files are in a sub directory of the project.
 - [ ] How to generate an example? Maybe just in the Readme.
 - [ ] Unit tests.
+
+## Example
+
+This package has one function: `tar_render_book()`. This is a drop in
+replacement for
+[`tarchetypes::tar_render()`](https://github.com/ropensci/tarchetypes)
+but points to a directory with bookdown files.
+
+Note that `tar_render_book()` tracks dependency files (`_output.yml`,
+`_bookdown.yml`) and these files are expected to be in the same
+directory as the `index.Rmd` file. Targets should also track changes in
+`.bib`, `.lua`, or other files in the same directory that if changed,
+will result in `tar_make()` running the target again.
+
+``` r
+library(targets)
+library(bookdowntargets)
+list(
+  tar_target(dataset, data.frame(x = letters)),
+  tar_render_book(report, path = "report_directory")
+)
+```
