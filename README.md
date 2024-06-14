@@ -12,6 +12,7 @@ proof-of-concept.](https://www.repostatus.org/badges/latest/concept.svg)](https:
 [![R-CMD-check](https://github.com/mps9506/bookdowntargets/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/mps9506/bookdowntargets/actions/workflows/R-CMD-check.yaml)
 [![bookdowntargets status
 badge](https://mps9506.r-universe.dev/badges/bookdowntargets)](https://mps9506.r-universe.dev/bookdowntargets)
+[![codecov](https://codecov.io/gh/mps9506/bookdowntargets/graph/badge.svg?token=XPzgCybMuv)](https://codecov.io/gh/mps9506/bookdowntargets)
 <!-- badges: end -->
 
 Experimental package implementing the targets pipeline for bookdown
