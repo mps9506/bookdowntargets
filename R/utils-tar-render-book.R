@@ -3,24 +3,16 @@
 # bookdown.
 tar_bookdown_deps <- function(path) {
 
+  tar_assert_dir(path)
 
-  if (fs::is_dir(path)) {
-    do.call(c,
-            lapply(
-              fs::dir_ls(path, regexp = "Rmd$", ignore.case = TRUE), ## need to make this case insensitive
-              function(file) {
-                tarchetypes::tar_knitr_deps(file)
-              }
-            )
-    )
-  } else {
-    do.call(c,
-            lapply(
-              path,
+  do.call(c,
+          lapply(
+            fs::dir_ls(path, regexp = "Rmd$", ignore.case = TRUE),
+            function(file) {
               tarchetypes::tar_knitr_deps(file)
-            )
-    )
-  }
+            }
+          )
+  )
 }
 
 # From tarchetypes:::`%|||%`
