@@ -60,9 +60,17 @@ tar_render_book_run <- function (path, args, deps)
 
   source <- fs::path_real(path)
 
-  files <- fs::dir_ls(source)
+  ## if the path == working directory, we don't need to return the _targets
+  ## subdirectory
+  if(fs::path_real(fs::path_wd()) == source) {
+    files <- fs::dir_ls(source,
+                        regexp = "(_targets)$",
+                        invert = TRUE)
+  } else {
+    files <- fs::dir_ls(source)
+  }
 
-  out <- unique(c(sort(output), sort(source), sort(files)))
+  out <- unique(c(sort(output), sort(files)))
   out <- as.character(fs::path_rel(out))
 
 
