@@ -3,35 +3,16 @@
 # bookdown.
 tar_bookdown_deps <- function(path) {
 
+  tar_assert_dir(path)
 
-  if (fs::is_dir(path)) {
-    do.call(c,
-            lapply(
-              fs::dir_ls(path, regexp = "Rmd$", ignore.case = TRUE), ## need to make this case insensitive
-              function(file) {
-                tarchetypes::tar_knitr_deps(file)
-              }
-            )
-    )
-  } else {
-    do.call(c,
-            lapply(
-              path,
+  do.call(c,
+          lapply(
+            fs::dir_ls(path, regexp = "Rmd$", ignore.case = TRUE),
+            function(file) {
               tarchetypes::tar_knitr_deps(file)
-            )
-    )
-  }
-}
-
-# From tarchetypes:::`%|||%`
-
-`%|||%` <- function(x, y) {
-  if (is.null(x)) {
-    y
-  }
-  else {
-    x
-  }
+            }
+          )
+  )
 }
 
 # Adapted from tarchetypes:::tar_render_command
@@ -79,9 +60,17 @@ tar_render_book_run <- function (path, args, deps)
 
   source <- fs::path_real(path)
 
-  files <- fs::dir_ls(source)
+  ## if the path == working directory, we don't need to return the _targets
+  ## subdirectory
+  if(fs::path_real(fs::path_wd()) == source) {
+    files <- fs::dir_ls(source,
+                        regexp = "(_targets)$",
+                        invert = TRUE)
+  } else {
+    files <- fs::dir_ls(source)
+  }
 
-  out <- unique(c(sort(output), sort(source), sort(files)))
+  out <- unique(c(sort(output), sort(files)))
   out <- as.character(fs::path_rel(out))
 
 
@@ -90,27 +79,3 @@ tar_render_book_run <- function (path, args, deps)
 
 
 
-
-# From tarchetypes:::call_list
-call_list <- function(args) {
-  call_function("list", args)
-}
-
-# From tarchetypes:::as_symbols
-as_symbols <- function(x) {
-  lapply(x, as.symbol)
-}
-
-# From tarchetypes:::if_any
-if_any <- function(condition, x, y) {
-  if (any(condition)) {
-    x
-  } else {
-    y
-  }
-}
-
-# From tarchetypes:::call_function
-call_function <- function(name, args) {
-  as.call(c(as.symbol(name), args))
-}
