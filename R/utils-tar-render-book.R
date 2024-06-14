@@ -3,6 +3,8 @@
 # bookdown.
 tar_bookdown_deps <- function(path) {
 
+  tar_assert_dir(path)
+
   do.call(c,
           lapply(
             fs::dir_ls(path, regexp = "Rmd$", ignore.case = TRUE),

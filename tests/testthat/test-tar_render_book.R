@@ -104,7 +104,6 @@ targets::tar_test("tar_render_book() runs from project root", {
 
   })
 
-
 targets::tar_test("tar_render_book() returns errors", {
   skip_rmarkdown()
   ## write temp rmd file
@@ -135,5 +134,3 @@ targets::tar_test("tar_render_book() returns errors", {
 
 
 })
-
-
