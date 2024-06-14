@@ -10,6 +10,8 @@ yet, or the repository is only intended to be a limited example, demo,
 or
 proof-of-concept.](https://www.repostatus.org/badges/latest/concept.svg)](https://www.repostatus.org/#concept)
 [![R-CMD-check](https://github.com/mps9506/bookdowntargets/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/mps9506/bookdowntargets/actions/workflows/R-CMD-check.yaml)
+[![bookdowntargets status
+badge](https://mps9506.r-universe.dev/badges/bookdowntargets)](https://mps9506.r-universe.dev/bookdowntargets)
 <!-- badges: end -->
 
 Experimental package implementing the targets pipeline for bookdown
@@ -25,6 +27,12 @@ submitted to CRAN.
   files are in a sub directory of the project.
 - [ ] How to generate an example? Maybe just in the Readme.
 - [ ] Unit tests.
+
+## Installation
+
+``` r
+install.packages("bookdowntargets", repos = c("https://mps9506.r-universe.dev", "https://cloud.r-project.org"))
+```
 
 ## Example
 
