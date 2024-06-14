@@ -15,17 +15,6 @@ tar_bookdown_deps <- function(path) {
   )
 }
 
-# From tarchetypes:::`%|||%`
-
-`%|||%` <- function(x, y) {
-  if (is.null(x)) {
-    y
-  }
-  else {
-    x
-  }
-}
-
 # Adapted from tarchetypes:::tar_render_command
 tar_render_book_command <- function(path, args) {
 
@@ -82,27 +71,3 @@ tar_render_book_run <- function (path, args, deps)
 
 
 
-
-# From tarchetypes:::call_list
-call_list <- function(args) {
-  call_function("list", args)
-}
-
-# From tarchetypes:::as_symbols
-as_symbols <- function(x) {
-  lapply(x, as.symbol)
-}
-
-# From tarchetypes:::if_any
-if_any <- function(condition, x, y) {
-  if (any(condition)) {
-    x
-  } else {
-    y
-  }
-}
-
-# From tarchetypes:::call_function
-call_function <- function(name, args) {
-  as.call(c(as.symbol(name), args))
-}
