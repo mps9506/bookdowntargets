@@ -57,7 +57,6 @@ tar_render_book_run <- function (path, args, deps)
   force(args$envir)
   output <- do.call(bookdown::render_book, args)
   output <- fs::path_real(output)
-
   source <- fs::path_real(path)
 
   ## if the path == working directory, we don't need to return the _targets
