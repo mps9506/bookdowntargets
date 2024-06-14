@@ -1,7 +1,7 @@
 Package: bookdowntargets
 Type: Package
 Title: Targets for bookdown pipeline
-Version: 0.0.9000
+Version: 0.1.0
 Authors@R: c(
     person(
       given = "Michael", 
