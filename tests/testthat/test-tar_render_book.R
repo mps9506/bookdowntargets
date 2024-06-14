@@ -103,3 +103,37 @@ targets::tar_test("tar_render_book() runs from project root", {
 
 
   })
+
+
+targets::tar_test("tar_render_book() returns errors", {
+  skip_rmarkdown()
+  ## write temp rmd file
+  lines <- c(
+    "---",
+    "title: report",
+    "output: bookdown::html_document2",
+    "---",
+    "",
+    "```{r}",
+    "targets::tar_read(data)",
+    "```"
+  )
+  writeLines(lines, "index.Rmd")
+
+  targets::tar_script({
+    library(tarchetypes)
+    list(
+      targets::tar_target(data, data.frame(x = seq_len(26L), y = letters)),
+      tar_render_book(report, "index.Rmd", quiet = TRUE)
+    )
+  })
+
+  # First run.
+  testthat::expect_error(
+    targets::tar_make(callr_function = NULL)
+    )
+
+
+})
+
+

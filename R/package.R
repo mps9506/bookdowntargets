@@ -6,7 +6,7 @@
 #'   pipelines in targets easier and cleaner to write and understand.
 #' @name bookdowntargets-package
 #' @importFrom fs dir_ls is_dir path_ext_remove path_rel
-#' @importFrom targets tar_assert_chr tar_assert_package tar_assert_path tar_deparse_language tar_option_get tar_target_raw tar_tidy_eval
+#' @importFrom targets tar_assert_chr tar_assert_package tar_deparse_language tar_option_get tar_target_raw tar_tidy_eval
 #' @importFrom withr local_options
 NULL
 
