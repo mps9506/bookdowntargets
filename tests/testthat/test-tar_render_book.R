@@ -111,7 +111,7 @@ targets::tar_test("tar_render_book() runs from project root", {
     library(tarchetypes)
     list(
       targets::tar_target(data, data.frame(x = seq_len(26L), y = letters)),
-      tar_render_book(report, "index.rmd", quiet = TRUE)
+      tar_render_book(report, "index.Rmd", quiet = TRUE)
     )
   })
   suppressMessages(targets::tar_make(callr_function = NULL))
