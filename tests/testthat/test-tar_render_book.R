@@ -20,7 +20,8 @@ targets::tar_test("tar_render_book() runs from subdirectory", {
   ## write temp _output.yml and _bookdown.yml files
   lines <- c(
     "---",
-    "bookdown::html_document2",
+    "bookdown::html_document2: default",
+    "bookdown::pdf_document2: default",
     "---"
   )
   output_file <- fs::file_create(fs::path(bookdown_dir, "_output", ext = "yml"))
@@ -31,7 +32,7 @@ targets::tar_test("tar_render_book() runs from subdirectory", {
     library(tarchetypes)
     list(
       targets::tar_target(data, data.frame(x = seq_len(26L), y = letters)),
-      tar_render_book(report, fs::path(bookdown_dir), quiet = TRUE)
+      tar_render_book(report, fs::path(bookdown_dir), output_format = "all", quiet = TRUE)
     )
   })
 
@@ -44,10 +45,16 @@ targets::tar_test("tar_render_book() runs from subdirectory", {
                sort(c("data", "report")))
 
 
-  # Should return expected file paths and resources
+  # tar_render book Should return tracked file paths and resources
   out <- targets::tar_read(report)
   expect_equal(sort(basename(out)),
-               sort(c(basename(fs::dir_ls(bookdown_dir)))))
+               sort(c(basename(fs::dir_ls(bookdown_dir,
+                                          recurse = TRUE)))))
+  # Should contain _main.html and _main.pdf
+  expect_in(c("_main.html", "_main.pdf"),
+            c(basename(fs::dir_ls(bookdown_dir,
+                                  recurse = TRUE))))
+
 
   # Should not rerun the report.
   suppressMessages(targets::tar_make(callr_function = NULL))
@@ -76,7 +83,7 @@ targets::tar_test("tar_render_book() runs from project root", {
     library(tarchetypes)
     list(
       targets::tar_target(data, data.frame(x = seq_len(26L), y = letters)),
-      tar_render_book(report, fs::path_wd(), quiet = TRUE)
+      tar_render_book(report, ".", quiet = TRUE)
     )
   })
 
@@ -87,8 +94,7 @@ targets::tar_test("tar_render_book() runs from project root", {
   expect_equal(sort(progress$name),
                sort(c("data", "report")))
 
-
-  # Should return expected file paths and resources
+  # tar_render book Should return tracked file paths and resources
   out <- targets::tar_read(report)
   expect_equal(sort(basename(out)),
                sort(c(basename(fs::dir_ls(fs::path_wd(),
