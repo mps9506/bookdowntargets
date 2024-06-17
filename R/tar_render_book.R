@@ -60,7 +60,7 @@ tar_render_book <- function(name,
 
   targets::tar_assert_package("bookdown")
   targets::tar_assert_chr(path)
-  tar_assert_dir(path)
+  targets::tar_assert_path(path)
 
   envir <- targets::tar_option_get("envir")
 
