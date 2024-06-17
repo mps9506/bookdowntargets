@@ -3,30 +3,33 @@
 # bookdown.
 tar_bookdown_deps <- function(path) {
 
-  tar_assert_dir(path)
+    do.call(c,
+            lapply(
+              fs::dir_ls(path, regexp = "Rmd$", ignore.case = TRUE),
+              function(file) {
+                tarchetypes::tar_knitr_deps(file)
+              }
+            )
+    )
 
-  do.call(c,
-          lapply(
-            fs::dir_ls(path, regexp = "Rmd$", ignore.case = TRUE),
-            function(file) {
-              tarchetypes::tar_knitr_deps(file)
-            }
-          )
-  )
 }
 
 # Adapted from tarchetypes:::tar_render_command
 tar_render_book_command <- function(path, args) {
-
   args$input <- path
   args$knit_root_dir <- quote(getwd())
-  deps <- call_list(as_symbols(
-    tar_bookdown_deps(path)
-  )
-  )
+
+  if(fs::is_dir(path)){
+    deps <- call_list(as_symbols(
+      tar_bookdown_deps(path)
+    ))
+  } else {
+    deps <- lapply(c(path), tarchetypes::tar_knitr_deps)
+  }
 
   fun <- as.symbol("tar_render_book_run")
   exprs <- list(fun, path = path, args = args, deps = deps)
+
   as.expression(as.call(exprs))
 }
 
@@ -59,15 +62,20 @@ tar_render_book_run <- function (path, args, deps)
   output <- fs::path_real(output)
   source <- fs::path_real(path)
 
-  ## if the path == working directory, we don't need to return the _targets
-  ## subdirectory
-  if(fs::path_real(fs::path_wd()) == source) {
-    files <- fs::dir_ls(source,
-                        regexp = "(_targets)$",
-                        invert = TRUE)
+  if(fs::is_dir(source)) {
+    ## if the path == working directory, we don't need to return the _targets
+    ## subdirectory
+    if(fs::path_real(fs::path_wd()) == source) {
+      files <- fs::dir_ls(source,
+                          regexp = "(_targets)$",
+                          invert = TRUE)
+    } else {
+      files <- fs::dir_ls(source)
+    }
   } else {
-    files <- fs::dir_ls(source)
+    files <- source
   }
+
 
   out <- unique(c(sort(output), sort(files)))
   out <- as.character(fs::path_rel(out))
