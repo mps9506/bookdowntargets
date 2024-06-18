@@ -2,11 +2,10 @@
 % Please edit documentation in R/package.R
 \name{bookdowntargets-package}
 \alias{bookdowntargets-package}
-\title{targets: Archetypes for Targets}
+\title{bookdowntargets: tarchetype pipeline for bookdown reports.}
 \description{
-A pipeline toolkit for R, the `targets` package brings together
-  function-oriented programming and Make-like declarative pipelines for
-  Statistics and data science. The `tarchetypes` package provides
-  convenient helper functions to create specialized targets, making
-  pipelines in targets easier and cleaner to write and understand.
+A pipeline toolkit for R, the \code{targets} package brings together
+function-oriented programming and Make-like declarative pipelines for
+Statistics and data science. The \code{bookdowntargets} package provides a
+convenient helper function to create specialized targets.
 }

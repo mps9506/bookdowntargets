@@ -112,42 +112,42 @@ functions like \code{\link[targets:tar_make]{tar_make()}}. For example,
 lists all the targets whose descriptions start with the character
 string \code{"survival model"}.}
 
-\item{...}{Named arguments to `bookdown::render_book()`.
+\item{...}{Named arguments to \code{bookdown::render_book()}.
 These arguments are evaluated when the target actually runs in
-`tar_make()`, not when the target is defined.}
+\code{tar_make()}, not when the target is defined.}
 }
 \value{
-A target object with `format = "file"`. When this target runs, it
-  returns a character vector of file paths: the rendered document, and the
-  source directory/files. All returned paths are *relative* paths to ensure portability
-  (so that the project can be moved from one file system to another
-  without invalidating the target). See the "Target objects" section for background.
+A target object with \code{format = "file"}. When this target runs, it
+returns a character vector of file paths: the rendered document, and the
+source directory/files. All returned paths are \emph{relative} paths to ensure portability
+(so that the project can be moved from one file system to another
+without invalidating the target). See the "Target objects" section for background.
 }
 \description{
-Shorthand to render a book via [bookdown::render_book] as part
-  of a `targets` pipeline.
+Shorthand to render a book via \link[bookdown:render_book]{bookdown::render_book} as part
+of a \code{targets} pipeline.
 }
 \details{
-`tar_render_book()` is an alternative to `tar_target()` for
-  Bookdown books that depend on other targets. The folder or files to be
-  rendered via [bookdown::render_book] should mention dependency targets with
-  `tar_load()` and `tar_read()` in the active code chunks
-  (which also allows you to render the report
-  outside the pipeline if the `_targets/` data store already exists).
-  (Do not use `tar_load_raw()` or `tar_read_raw()` for this.)
-  Then, `tar_render_book()` defines a special kind of target. It
-    1. Finds all the `tar_load()`/`tar_read()` dependencies in any RMarkdown
-       file within the bookdown directory or supplied files and inserts
-       them into the target's command. This enforces the proper dependency relationships.
-       (Do not use `tar_load_raw()` or `tar_read_raw()` for this.)
-    2. Sets `format = "file"` (see `tar_target()`) so `targets` watches the files
-        at the returned paths and reruns the report if those files change.
-    3. Configures the target's command to return both the output
-       report files and the input source directory/files. All these file paths
-       are relative paths so the project stays portable.
-    4. Forces the report to run in the user's current working directory
-       instead of the working directory of the report.
-    5. Sets convenient default options such as `deployment = "main"`
-       in the target.
+\code{tar_render_book()} is an alternative to \code{tar_target()} for
+Bookdown books that depend on other targets. The folder or files to be
+rendered via \link[bookdown:render_book]{bookdown::render_book} should mention dependency targets with
+\code{tar_load()} and \code{tar_read()} in the active code chunks
+(which also allows you to render the report
+outside the pipeline if the \verb{_targets/} data store already exists).
+(Do not use \code{tar_load_raw()} or \code{tar_read_raw()} for this.)
+Then, \code{tar_render_book()} defines a special kind of target. It
+1. Finds all the \code{tar_load()}/\code{tar_read()} dependencies in any RMarkdown
+file within the bookdown directory or supplied files and inserts
+them into the target's command. This enforces the proper dependency relationships.
+(Do not use \code{tar_load_raw()} or \code{tar_read_raw()} for this.)
+2. Sets \code{format = "file"} (see \code{tar_target()}) so \code{targets} watches the files
+at the returned paths and reruns the report if those files change.
+3. Configures the target's command to return both the output
+report files and the input source directory/files. All these file paths
+are relative paths so the project stays portable.
+4. Forces the report to run in the user's current working directory
+instead of the working directory of the report.
+5. Sets convenient default options such as \code{deployment = "main"}
+in the target.
 }
 \concept{Literate programming targets}
