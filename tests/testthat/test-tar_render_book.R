@@ -1,6 +1,7 @@
 targets::tar_test("tar_render_book() runs from subdirectory", {
 
   skip_rmarkdown()
+  skip_latex()
   bookdown_dir <- fs::dir_create(fs::path_wd(), "single_file")
 
   ## write temp rmd file
