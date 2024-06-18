@@ -20,7 +20,7 @@ Authors@R: c(
       email = "jdt@jdtrat.com", 
       role = c("aut"),
       comment = c(ORCID = "0000-0002-1097-7603",
-                  "Implementation of tar_render_book(), <https://github.com/jdtrat/tar-render-book-demo>")
+                  "Original implementation, <https://github.com/jdtrat/tar-render-book-demo>")
     ),
     person(
       given = c("William", "Michael"),
