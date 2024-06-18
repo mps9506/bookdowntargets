@@ -123,7 +123,6 @@ targets::tar_test("tar_render_book() runs from project root", {
 
   })
 
-
 targets::tar_test("tar_render_book() works with multiple files", {
 
   skip_rmarkdown()
@@ -193,7 +192,40 @@ targets::tar_test("tar_render_book() works with multiple files", {
 
 })
 
-
+targets::tar_test("tar_render_book() for parameterized reports", {
+  skip_rmarkdown()
+  lines <- c(
+    "---",
+    "title: report",
+    "output_format: bookdown::html_document2",
+    "params:",
+    "  param1: \"default\"",
+    "  param2: \"default\"",
+    "---",
+    "# Intro",
+    "```{r}",
+    "print(params$param1)",
+    "print(params$param2)",
+    "```"
+  )
+  writeLines(lines, "index.Rmd")
+  targets::tar_script({
+    library(tarchetypes)
+    value <- "abcd1234verydistinctvalue"
+    list(
+      tar_target(upstream, "anotherverydistinctvalue"),
+      tar_render_book(
+        report,
+        ".",
+        params = list(param1 = !!value, param2 = upstream),
+        quiet = TRUE
+      )
+    )
+  })
+  suppressMessages(targets::tar_make(callr_function = NULL))
+  lines <- readLines("_book/index.html")
+  expect_true(any(grepl("anotherverydistinctvalue", lines)))
+})
 
 targets::tar_test("tar_render_book() returns errors", {
   skip_rmarkdown()
