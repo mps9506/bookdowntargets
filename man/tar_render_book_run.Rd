@@ -2,25 +2,25 @@
 % Please edit documentation in R/utils-tar-render-book.R
 \name{tar_render_book_run}
 \alias{tar_render_book_run}
-\title{Render an bookdown report inside a `tar_render_book()` target.}
+\title{Render an bookdown report inside a \code{tar_render_book()} target.}
 \usage{
 tar_render_book_run(path, args, deps)
 }
 \arguments{
 \item{path}{Path to bookdown directory}
 
-\item{args}{Named list of arguments to `bookdown::render_book()`.}
+\item{args}{Named list of arguments to \code{bookdown::render_book()}.}
 
 \item{deps}{An unnamed list of target dependencies of the R Markdown
-report, automatically created by `tar_bookdown_deps()`.}
+report, automatically created by \code{tar_bookdown_deps()}.}
 }
 \value{
 Character vector with the path to the R Markdown source file
-  and the relative path to the output. These paths depend on the input
-  source file path and have no defaults.
+and the relative path to the output. These paths depend on the input
+source file path and have no defaults.
 }
 \description{
-Internal function needed for `tar_render_book()`.
+Internal function needed for \code{tar_render_book()}.
 Users should not invoke it directly.
 }
 \keyword{internal}
